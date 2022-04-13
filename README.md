@@ -1,7 +1,7 @@
 # Programmers-auto-submit 💬 
 
 ## **프로젝트 설명**
-> 로컬 환경에서 해결한 <a href="https://programmers.co.kr/learn/challenges">프로그래머스 코딩테스트 연습 문제</a>를, CLI를 통해 제출하고 결과를 알 수 있도록 작성한 **프로그래머스 제출 자동화 스크립트**
+로컬 환경에서 해결한 <a href="https://programmers.co.kr/learn/challenges">프로그래머스 코딩테스트 연습 문제</a>를, CLI를 통해 제출하고 결과를 알 수 있도록 작성한 **프로그래머스 제출 자동화 스크립트**
 
 <br/>
 
@@ -10,17 +10,29 @@
 ```bash
 git clone https://github.com/sieukim/programmers-auto-submit
 ```
+
+<br/>
+
 ### **2️⃣ &nbsp; Set ID and Password**
-<img src='./readme-img/config.png'/>
+<img src='./readme-img/config.png' width="500px"/>
 
 `index.py` **156**, **157**번째 줄을 찾아 **프로그래머스 아이디와 비밀번호**를 설정해주세요.
+
+<br/>
+
 ### **3️⃣ &nbsp; Execute Script**
-<img src='./readme-img/execute.png'/><br/>
+<img src='./readme-img/execute.png' width="300px"/><br/>
 터미널에 `python3 index.py {파일 경로}`를 입력하여 스크립트를 실행합니다.
 
-<img src='./readme-img/programmers.png'/><br/>
-1. 프로그래머스 연습 페이지는 위와 같이 구성되어있고, 주소는 `programmers.co.kr/learn/course/30/lessons/{문제 번호}`형식을 가집니다. 따라서 해당 문제 번호를 주소에서 찾아 입력해주세요. 
-2. 빨간색으로 표시한 위치에 사용 언어가 표시되어있습니다. 해당 문구를 그대로 풀이 언어에 입력해주세요. (대소문자 변경 가능, 한글 번역 불가, 띄어쓰기 불가)
+<br/>
+
+<img src='./readme-img/programmers.png'/>
+
+**문제 번호 입력**
+> 프로그래머스 연습 문제 주소는 `programmers.co.kr/learn/course/30/lessons/{문제 번호}`형식을 가집니다. 따라서 해당 **문제 번호를 주소에서 찾아 입력**해주세요. 
+
+**풀이 언어 입력**
+> 프로그래머스 연습 문제 사이트는 위와 같이 구성되어있고, 빨간색으로 표시한 위치에 풀이 언어가 있습니다. 해당 언어를 **그대로 풀이 언어에 입력**해주세요. (단, 대소문자 변경 가능, 한글 번역 불가, 띄어쓰기 불가)
 
 <br/>
 

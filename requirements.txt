@@ -1,0 +1,3 @@
+chromedriver_autoinstaller
+python-dotenv
+selenium

@@ -1,5 +1,6 @@
 import os
 import sys
+from dotenv import load_dotenv
 import chromedriver_autoinstaller
 
 from selenium import webdriver
@@ -152,18 +153,18 @@ def get_user_code():
 
 # 프로그램 실행 함수
 def main():
-    # 사용자 정보 입력!!
-    id = 'id'
-    pwd = 'pwd'
-
     # 문제 정보 표준 입력
     print('문제 번호를 입력해주세요: ', end='')
     problem = input()           # 문제 번호
     print('풀이 언어를 입력해주세요: ', end='')
     language = input().lower()  # 풀이 언어 (소문자)
 
-    # 사용자 코드
-    user_code = get_user_code()
+    # .env 불러오기
+    load_dotenv(verbose=True)
+
+    # 사용자 정보 불러오기
+    id = os.environ.get('ID')
+    pwd = os.environ.get('PASSWORD')
 
     # 로그인
     print('로그인 중...')
@@ -172,6 +173,9 @@ def main():
     if error == 'Login Failed':
         print(f'로그인 정보가 옳바르지 않습니다.')
         return
+
+    # 사용자 코드
+    user_code = get_user_code()
 
     # 문제 제출
     print('채점 중...')

@@ -14,14 +14,19 @@ git clone https://github.com/sieukim/programmers-auto-submit
 <br/>
 
 ### **2️⃣ &nbsp; Set ID and Password**
-<img src='./readme-img/config.png' width="500px"/>
+```bash
+# .env 
+ID=user_id
+PASSWORD=user_password
+```
+`.env` 파일을 찾아 **프로그래머스 아이디와 비밀번호**를 설정해주세요. 만약 아이디가 user_id라면 따옴표 없이 user_id로 입력해주세요. 
 
-`index.py` **156**, **157**번째 줄을 찾아 **프로그래머스 아이디와 비밀번호**를 설정해주세요.
+### **3️⃣ &nbsp; Install Libraries**
+터미널에 `pip install -r requirements.txt`를 입력하여 필요 라이브러리를 설치해주세요.
 
-<br/>
-
-### **3️⃣ &nbsp; Execute Script**
+### **4️⃣ &nbsp; Execute Program**
 <img src='./readme-img/execute.png' width="300px"/><br/>
+
 터미널에 `python3 index.py {파일 경로}`를 입력하여 스크립트를 실행합니다.
 
 <br/>
@@ -51,5 +56,3 @@ git clone https://github.com/sieukim/programmers-auto-submit
 `Python 3.9` - 스크립트 작성
 
 `Selenium` `Webdriver` - 동적 크롤링 및 자동화 
-
-`Chromedriver_autoinstaller` - Chrome 버전에 맞춰 driver를 업데이트 해주는 라이브러리

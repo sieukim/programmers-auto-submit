@@ -1,12 +1,13 @@
 import os
 import sys
-from dotenv import load_dotenv
+import platform
 import chromedriver_autoinstaller
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
+from dotenv import load_dotenv
 
 
 # 설정된 driver를 반환하는 함수
@@ -150,21 +151,32 @@ def get_user_code():
     
     return user_code
 
+# 현재 터미널 내용을 지우는 함수
+def clear():
+    # 현재 os 확인
+    OS = platform.system()
+
+    # Windows
+    if OS == 'Windows':
+        os.system('cls')
+    # Unix, Linux
+    else:
+        os.system('clear')
+
+    if platform.system() == 'Windows':
+        os.system()
 
 # 프로그램 실행 함수
 def main():
-    # 문제 정보 표준 입력
-    print('문제 번호를 입력해주세요: ', end='')
-    problem = input()           # 문제 번호
-    print('풀이 언어를 입력해주세요: ', end='')
-    language = input().lower()  # 풀이 언어 (소문자)
-
     # .env 불러오기
     load_dotenv(verbose=True)
 
     # 사용자 정보 불러오기
     id = os.environ.get('ID')
     pwd = os.environ.get('PASSWORD')
+
+    # 현재 터미널 내용 지우기
+    clear()
 
     # 로그인
     print('로그인 중...')
@@ -177,8 +189,17 @@ def main():
     # 사용자 코드
     user_code = get_user_code()
 
+    # 현재 터미널 내용 지우기
+    clear()
+
+    # 문제 정보 표준 입력
+    print('문제 번호를 입력해주세요: ', end='')
+    problem = input()           # 문제 번호
+    print('풀이 언어를 입력해주세요: ', end='')
+    language = input().lower()  # 풀이 언어 (소문자)
+
     # 문제 제출
-    print('채점 중...')
+    print('\n채점 중...')
     error = submit(problem=problem, language=language, user_code=user_code)
 
     if error == 'Problem Not Found':
@@ -188,6 +209,9 @@ def main():
     if error == 'Language Not Found':
         print(f'{problem}번 문제는 {language}를 지원하지 않습니다.')
         return
+
+    # 현재 터미널 내용 지우기
+    clear()
 
     # 결과 출력
     error = print_result()

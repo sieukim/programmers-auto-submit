@@ -112,18 +112,9 @@ def print_result():
             driver.implicitly_wait(1)
 
     try:
-        # 테스트 결과 리스트
-        test_results = driver.find_elements(by=By.CLASS_NAME, value='result')
-
-        print('--------------- 채점 결과 ---------------')
-        # 테스트 결과 출력
-        for i in range(len(test_results)):
-            print(f'테스트 {i + 1}>\t{test_results[i].text}')
-        print('-----------------------------------------')
-
-        # 테스트 점수
-        test_score = driver.find_elements(by=By.CLASS_NAME, value='console-message')[-1]
-        print(test_score.text)    
+        # 테스트 결과 컨테이너
+        result_container = driver.find_element(by=By.XPATH, value='//*[@id="output"]/pre')
+        print(result_container.text)
     except:
         # 테스트 실패(출력문 과다.. 등)
         test_failed = driver.find_element(by=By.CLASS_NAME, value='console-failed')

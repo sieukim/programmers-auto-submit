@@ -1,5 +1,6 @@
 import os
 import sys
+import ssl
 import platform
 import chromedriver_autoinstaller
 
@@ -8,7 +9,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from dotenv import load_dotenv
-
 
 # 설정된 driver를 반환하는 함수
 def get_driver():
@@ -19,6 +19,7 @@ def get_driver():
 
     # 최신 버전이 설치 안 된 경우
     if not os.path.exists(chrome_driver) and not os.path.exists(chrome_driver + '.exec'):
+        ssl._create_default_https_context = ssl._create_unverified_context
         print(f'Chrom driver is installed, version is {current_version}: {chrome_driver}')
         chromedriver_autoinstaller.install(True)
 

@@ -4,6 +4,8 @@ import ssl
 import platform
 import chromedriver_autoinstaller
 
+ssl._create_default_https_context = ssl._create_unverified_context
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -36,16 +38,16 @@ def get_driver():
 # 로그인 함수
 def login(id, pwd):
     # 로그인 url
-    url = 'https://programmers.co.kr/users/login'
+    url = 'https://programmers.co.kr/account/sign_in'
     driver.get(url)
     driver.implicitly_wait(1)
 
     # 아이디 input
-    input_id = driver.find_element(by=By.XPATH, value='//*[@id="user_email"]')
+    input_id = driver.find_element(by=By.XPATH, value='//*[@id="main-app-account"]/div/div[2]/div/div[2]/div[1]/div/div[2]/div[2]/input')
     # 비밀번호 input
-    input_pwd = driver.find_element(by=By.XPATH, value='//*[@id="user_password"]')
+    input_pwd = driver.find_element(by=By.XPATH, value='//*[@id="main-app-account"]/div/div[2]/div/div[2]/div[1]/div/div[2]/div[4]/input')
     # 로그인 button
-    button_login = driver.find_element(by=By.XPATH, value='//*[@id="btn-sign-in"]')
+    button_login = driver.find_element(by=By.XPATH, value='//*[@id="main-app-account"]/div/div[2]/div/div[2]/div[1]/div/div[2]/button')
 
     # 데이터 입력
     input_id.send_keys(id)
@@ -58,7 +60,7 @@ def login(id, pwd):
 
     try:
         # 로그인 확인 = 유저 아이콘 확인
-        driver.find_element(by=By.XPATH, value='/html/body/div[1]/div/ul[2]/li[3]')
+        driver.find_element(by=By.XPATH, value='//*[@id="main-app-root"]/div/div[1]/div/div[2]/div[2]/div/div[1]/button')
     except:
         # 로그인 실패
         return 'Login Failed'
@@ -68,7 +70,7 @@ def login(id, pwd):
 # 코드 제출 함수
 def submit(problem, language, user_code):
     # 문제 url
-    url = f'https://programmers.co.kr/learn/courses/30/lessons/{problem}?language={language}'
+    url = f'https://school.programmers.co.kr/learn/courses/30/lessons/{problem}?language={language}'
     driver.get(url)
     driver.implicitly_wait(1)
 

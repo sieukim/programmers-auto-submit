@@ -34,7 +34,7 @@ PASSWORD=user_password
 <img src='./readme-img/programmers.png'/>
 
 **문제 번호 입력**
-> 프로그래머스 연습 문제 주소는 `programmers.co.kr/learn/course/30/lessons/{문제 번호}`형식을 가집니다. 따라서 해당 **문제 번호를 주소에서 찾아 입력**해주세요. 
+> 프로그래머스 연습 문제 주소는 `school.programmers.co.kr/learn/course/30/lessons/{문제 번호}`형식을 가집니다. 따라서 해당 **문제 번호를 주소에서 찾아 입력**해주세요. 
 
 **풀이 언어 입력**
 > 프로그래머스 연습 문제 사이트는 위와 같이 구성되어있고, 빨간색으로 표시한 위치에 풀이 언어가 있습니다. 해당 언어를 **그대로 풀이 언어에 입력**해주세요. (단, 대소문자 변경 가능, 한글 번역 불가, 띄어쓰기 불가)

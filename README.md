@@ -16,33 +16,32 @@ git clone https://github.com/sieukim/programmers-auto-submit
 ### **2️⃣ &nbsp; Set ID and Password**
 ```bash
 # .env 
-ID=user_id
-PASSWORD=user_password
+GITHUB=깃허브 로그인 여부 (True or False)
+ID=아이디 
+PASSWORD=비밀번호 
 ```
-`.env` 파일을 찾아 **프로그래머스 아이디와 비밀번호**를 설정해주세요. 만약 아이디가 user_id라면 따옴표 없이 user_id로 입력해주세요. 
+`.env` 파일을 찾아 로그인 정보를 설정해주세요. 
+- Github 계정은 `GITHUB`를 `True`로 설정하고, `ID`와 `PASSWORD`는 Github 아이디와 비밀번호로 설정해주세요.
+- 이메일 계정은 `GITHUB`를 `False`로 설정하고, `ID`와 `PASSWORD`는 이메일 아이디와 비밀번호로 설정해주세요.
 
 ### **3️⃣ &nbsp; Install Libraries**
 터미널에 `pip install -r requirements.txt`를 입력하여 필요 라이브러리를 설치해주세요.
 
 ### **4️⃣ &nbsp; Execute Program**
-<img src='./readme-img/execute.png' width="300px"/><br/>
+<img src='./readme-img/cli.png' width="400px"/><br/>
 
-터미널에 `python3 index.py {파일 경로}`를 입력하여 스크립트를 실행합니다.
-
-<br/>
-
-<img src='./readme-img/programmers.png'/>
-
-**문제 번호 입력**
-> 프로그래머스 연습 문제 주소는 `school.programmers.co.kr/learn/course/30/lessons/{문제 번호}`형식을 가집니다. 따라서 해당 **문제 번호를 주소에서 찾아 입력**해주세요. 
-
-**풀이 언어 입력**
-> 프로그래머스 연습 문제 사이트는 위와 같이 구성되어있고, 빨간색으로 표시한 위치에 풀이 언어가 있습니다. 해당 언어를 **그대로 풀이 언어에 입력**해주세요. (단, 대소문자 변경 가능, 한글 번역 불가, 띄어쓰기 불가)
+터미널에 `python3 index.py {문제 풀이 파일 경로} {문제 번호} {풀이 언어}`를 입력하여 스크립트를 실행합니다.
+- 문제 번호
+  - 프로그래머스 연습 문제 주소는 `school.programmers.co.kr/learn/course/30/lessons/{문제 번호}`형식을 가집니다. 따라서 해당 **문제 번호를 주소에서 찾아 입력**해주세요. 
+- 풀이 언어
+    <br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src='./readme-img/language.png' width=400/>
+  - 프로그래머스 연습 문제 사이트는 위와 같이 구성되어있고, 빨간색으로 표시한 위치에 풀이 언어가 있습니다. 해당 언어를 **그대로 풀이 언어에 입력**해주세요. (단, 대소문자 변경 가능, 한글 번역 불가, 띄어쓰기 불가) 
 
 <br/>
 
 ## **데모 영상**
-<img src='https://user-images.githubusercontent.com/67683679/163710154-23cfe8c5-18a1-4f0e-b3f3-5f89bba0a5a7.gif'/>
+<img src='https://user-images.githubusercontent.com/67683679/179027741-45be0948-b141-478f-b47a-95aa780401dd.gif'/>
 
 <br/>
 

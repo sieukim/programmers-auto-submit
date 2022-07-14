@@ -17,7 +17,7 @@ def get_driver():
     # 현재 크롬 버전
     current_version = chromedriver_autoinstaller.get_chrome_version().split('.')[0]
     # 크롬 드라이버 설치 경로
-    chrome_driver = f'./{current_version}/chromedriver' 
+    chrome_driver = f'./{current_version}/chromedriver'
 
     # 최신 버전이 설치 안 된 경우
     if not os.path.exists(chrome_driver) and not os.path.exists(chrome_driver + '.exec'):
@@ -35,44 +35,81 @@ def get_driver():
     # 드라이버 반환
     return driver
 
-# 로그인 함수
-def login(id, pwd):
-    # 로그인 url
-    url = 'https://programmers.co.kr/account/sign_in'
-    driver.get(url)
-    driver.implicitly_wait(1)
+# 소셜 로그인 함수
+def social_login(id, pwd, github):
+    if not github:
+        return False
 
-    # 아이디 input
-    input_id = driver.find_element(by=By.XPATH, value='//*[@id="main-app-account"]/div/div[2]/div/div[2]/div[1]/div/div[2]/div[2]/input')
-    # 비밀번호 input
-    input_pwd = driver.find_element(by=By.XPATH, value='//*[@id="main-app-account"]/div/div[2]/div/div[2]/div[1]/div/div[2]/div[4]/input')
-    # 로그인 button
-    button_login = driver.find_element(by=By.XPATH, value='//*[@id="main-app-account"]/div/div[2]/div/div[2]/div[1]/div/div[2]/button')
+    # 소셜 로그인 페이지로 이동
+    social_login_page = 'https://github.com/login'
+    driver.get(social_login_page)
 
-    # 데이터 입력
+    # xpath 초기화
+    input_id_xpath = '//*[@id="login_field"]'
+    input_pwd_xpath = '//*[@id="password"]'
+    login_button_xpath = '//*[@id="login"]/div[4]/form/div/input[12]'
+
+    # 아이디 입력
+    input_id = driver.find_element(by=By.XPATH, value=input_id_xpath)
     input_id.send_keys(id)
-    driver.implicitly_wait(1)
-    input_pwd.send_keys(pwd)
-    driver.implicitly_wait(1)
 
-    # 로그인 버튼 클릭 
-    button_login.send_keys(Keys.ENTER)
+    # 비밀번호 입력
+    input_pwd = driver.find_element(by=By.XPATH, value=input_pwd_xpath)
+    input_pwd.send_keys(pwd)
+
+    # 소셜 로그인
+    login_button = driver.find_element(by=By.XPATH, value=login_button_xpath)
+    login_button.send_keys(Keys.RETURN)
+
+    # 프로그래머스 로그인 페이지로 이동
+    programmers_login_page = 'https://programmers.co.kr/account/sign_in'
+    driver.get(programmers_login_page)
 
     try:
-        # 로그인 확인 = 유저 아이콘 확인
-        driver.find_element(by=By.XPATH, value='//*[@id="main-app-root"]/div/div[1]/div/div[2]/div[2]/div/div[1]/button')
+        # 소셜 로그인 버튼 클릭
+        login_button_xpath = f'//*[@id="main-app-account"]/div/div[2]/div/div[2]/div[1]/div/div[2]/div[5]/div[2]/form[2]/button'
+        login_button = driver.find_element(by=By.XPATH, value=login_button_xpath)
+        login_button.send_keys(Keys.ENTER)
+    except:
+        # 깃허브 로그인 -> 크롬 드라이버 103 오류 발생
+        return True
+
+# 로그인 함수
+def login(id, pwd, github):
+    # 소셜 로그인
+    result = social_login(id, pwd, github)
+
+    # 이메일 로그인
+    if not result:
+        # 프로그래머스 로그인 페이지로 이동
+        programmers_login_page = 'https://programmers.co.kr/account/sign_in'
+        driver.get(programmers_login_page)
+
+        # 아이디 입력
+        input_id = driver.find_element(by=By.XPATH, value='//*[@id="main-app-account"]/div/div[2]/div/div[2]/div[1]/div/div[2]/div[2]/input')
+        input_id.send_keys(id)
+
+        # 비밀번호 입력
+        input_pwd = driver.find_element(by=By.XPATH, value='//*[@id="main-app-account"]/div/div[2]/div/div[2]/div[1]/div/div[2]/div[4]/input')
+        input_pwd.send_keys(pwd)
+
+        # 로그인 버튼 클릭
+        button_login = driver.find_element(by=By.XPATH, value='//*[@id="main-app-account"]/div/div[2]/div/div[2]/div[1]/div/div[2]/button')
+        button_login.send_keys(Keys.ENTER)
+        driver.implicitly_wait(1)
+
+    try:
+        # 로그인 확인 = 로그아웃 버튼 확인
+        driver.find_element(by=By.XPATH, value='//*[@id="main-app-root"]/div/div[1]/div[1]/div/div[2]/div/div[1]/div/div[1]/button')
     except:
         # 로그인 실패
         return 'Login Failed'
-
-    driver.implicitly_wait(1)
 
 # 코드 제출 함수
 def submit(problem, language, user_code):
     # 문제 url
     url = f'https://school.programmers.co.kr/learn/courses/30/lessons/{problem}?language={language}'
     driver.get(url)
-    driver.implicitly_wait(1)
 
     # 문제 존재 확인
     try:
@@ -97,7 +134,6 @@ def submit(problem, language, user_code):
 
     # 코드 삽입 스크립트 실행
     driver.execute_script(script)
-    driver.implicitly_wait(1)
 
     # 코드 제출 button
     button_submit = driver.find_element(by=By.XPATH, value='//*[@id="submit-code"]')
@@ -125,21 +161,10 @@ def print_result():
 
 # 입력 파일 내 사용자 풀이 코드를 반환하는 함수
 def get_user_code():
-    # 풀이 코드 (argv: 상대 경로 or 절대 경로)
-    argv = sys.argv[1:]
-
-    # 입력 파일이 없는 경우
-    if len(argv) == 0:
-        print('파일을 입력해주세요.')
-        return
-    
-    # 입력 파일이 2개 이상인 경우
-    if len(argv) > 1:
-        print('하나의 파일만 입력해주세요.')
-        return
-    
+    # 문제 파일 경로 (argv: 상대 경로 or 절대 경로)
+    file = sys.argv[1]
     # 파일 열기
-    file = open(argv[0], 'r')
+    file = open(file, 'r')
     # 파일 읽기
     user_code = "".join(file.readlines())
     
@@ -162,22 +187,30 @@ def clear():
 
 # 프로그램 실행 함수
 def main():
+    # 문제 정보
+    if len(sys.argv) != 4:
+        print('index.py [문제 풀이 파일 경로] [문제 번호] [풀이 언어] 형식이 맞는지 확인해주세요.')
+        return
+
+    problem = sys.argv[2]
+    language = sys.argv[3].lower()
+
     # .env 불러오기
     load_dotenv(verbose=True)
 
     # 사용자 정보 불러오기
     id = os.environ.get('ID')
     pwd = os.environ.get('PASSWORD')
+    github = os.environ.get('GITHUB').lower() == 'true'
 
     # 현재 터미널 내용 지우기
     clear()
 
     # 로그인
     print('로그인 중...')
-    error = login(id=id, pwd=pwd)
-
+    error = login(id=id, pwd=pwd, github=github)
     if error == 'Login Failed':
-        print(f'로그인 정보가 옳바르지 않습니다.')
+        print(f'로그인 오류가 발생했습니다.')
         return
 
     # 사용자 코드
@@ -185,12 +218,6 @@ def main():
 
     # 현재 터미널 내용 지우기
     clear()
-
-    # 문제 정보 표준 입력
-    print('문제 번호를 입력해주세요: ', end='')
-    problem = input()           # 문제 번호
-    print('풀이 언어를 입력해주세요: ', end='')
-    language = input().lower()  # 풀이 언어 (소문자)
 
     # 문제 제출
     print('\n채점 중...')
@@ -208,7 +235,7 @@ def main():
     clear()
 
     # 결과 출력
-    error = print_result()
+    print_result()
 
 # 드라이버 설정
 driver = get_driver()
